@@ -1,0 +1,43 @@
+{
+  "name": "@quak.lib/qstore",
+  "version": "1.0.0",
+  "description": "Qstore is a state management library for JavaScript applications. It is inspired by Redux and NgRx. It is designed to be used with TypeScript and RxJS.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prettier": "prettier --write \"src/**/*.ts\"",
+    "prettier:check": "prettier --check \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "jest --config jestconfig.json",
+    "prepublishOnly": "npm test && npm run lint",
+    "publish": "npm run build && npm publish --access public"
+  },
+  "keywords": [
+    "state",
+    "management",
+    "redux",
+    "ngrx",
+    "rxjs"
+  ],
+  "author": "QUAK Kacper Walczak",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "prettier": "^2.8.7",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.3"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.0"
+  }
+}
