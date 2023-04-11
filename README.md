@@ -1,5 +1,5 @@
 # Qstore
-![QstoreLogo](https://quak.com.pl/assets/logo/qstore_no_bg.png)
+![QstoreLogo](https://quak.com.pl/assets/logo/qstore_logo.png)
 ![LicenseBadge](https://img.shields.io/github/license/walikuperek/qtheme)
 ![TestsBadge](https://img.shields.io/badge/Tests-5%2F5%20%E2%9C%85-success)
 
