@@ -17,8 +17,6 @@ npm install @quak.lib/qstore
 
 * [Requirements](#requirements)
 * [Installation](#installation)
-* [Overview](#overview)
-    - [Preferably use Actions](#preferably-use-actions)
 * [Getting started](#getting-started)
     - [How to use it?](#how-to-use-it)
     - [class Store](#class-store)
@@ -52,100 +50,6 @@ npm install @quak.lib/qstore
 ## Installation
 ```bash
 npm install @quak.lib/qstore
-```
-
-## Overview
-Store represents your data, use it wisely. Preferably use store per feature or split it and add facade.
-```typescript
-import {Store} from '@quak.lib/qstore';
-
-// Ensure that this is global, so that you can use it in any place in your application.
-// In Angular use SimplestStore as a service with @Injectable({providedIn: 'root'}).
-class ProductsStore extends Store<{ selectedProductsIds: string[] }> {
-    selectedProductsIds$ = this.select(state => state.selectedProductsIds);
-
-    constructor() {
-        super({selectedProductsIds: []});
-    }
-    
-    appendSelectedProductId(productId: string): void {
-        this.set({
-            selectedProductsIds: [...this.values.selectedProductsIds, productId]
-        });
-    }
-
-    setSelectedProductsIds(selectedProductsIds: string[]): void {
-        this.set({selectedProductsIds});
-    }
-}
-
-// Or with actions
-class SelectedProductStore extends Store<{selectedProduct: Product}> {
-    selectedProductsIds$ = this.select(state => state.selectedProductsIds);
-    actions = {
-        setSelectedProduct: ActionWith<Product>(),
-    };
-    
-    constructor() {
-        super({selectedProduct: null});
-        
-        this.actions.setSelectedProduct.listen()
-            .subscribe(selectedProduct => {
-                this.set({selectedProduct});
-            });
-    }
-}
-```
-
-### Preferably use Actions
-
-To execute some logic and listen to executions outside store, use action - *and achieve so-called effects*.
-
-```typescript
-import {Store, Action, ActionWith} from '@quak.lib/qstore';
-
-// Usage with actions
-class Component {
-    innerCounter = 0;
-    
-    constructor(public store: ProductsStore) {
-        // Actions are usefull when you need to listen to some external events and react to them.
-        this.store.actions.resetSelectedProductsIds.listen()
-            .subscribe(() => this.innerCounter = 0);
-    }
-
-    appendProduct(productId: string) {
-        this.store.actions.appendSelectedProductId.execute(productId);
-        this.innerCounter++;
-    }
-}
-
-class ProductsStore extends Store<{ selectedProductsIds: string[] }> {
-    selectedProductsIds$ = this.select(state => state.selectedProductsIds);
-
-    actions = {
-        resetSelectedProductsIds: new Action(),
-        appendSelectedProductId: new ActionWith<string>(),
-        setSelectedProductsIds: new ActionWith<string[]>() // use objects if you need more complex data
-    };
-
-    constructor() {
-        super({selectedProductsIds: []});
-        this.actions.appendSelectedProductId.listen().subscribe(this.appendSelectedProductId);
-        this.actions.resetSelectedProductsIds.listen().subscribe(() => this.setSelectedProductsIds([]));
-        this.actions.setSelectedProductsIds.listen().subscribe(this.setSelectedProductsIds);
-    }
-
-    appendSelectedProductId(productId: string): void {
-        this.set({
-            selectedProductsIds: [...this.values.selectedProductsIds, productId]
-        });
-    }
-
-    setSelectedProductsIds(selectedProductsIds: string[]): void {
-        this.set({selectedProductsIds});
-    }
-}
 ```
 
 ## Getting started
